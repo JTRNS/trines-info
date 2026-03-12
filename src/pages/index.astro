@@ -50,38 +50,38 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
       )
     }
 
-    <h1 class="mb-8 text-3xl">Blog</h1>
-
-    <ul class="flex list-none flex-col gap-8 p-0">
+    <section class="flex flex-col gap-8 p-0">
+      <h2 class="font-pixel text-2xl">Blog</h2>
       {
         blogroll.map((post) => (
-          <li class="border-b border-gray-200 pb-8 last:border-b-0">
-            <a
-              href={`/blog/${post.id}`}
-              class="group text-inherit no-underline"
-            >
-              <h2 class="mb-1 text-xl group-hover:underline">
+          <article class="relative isolate flex flex-col gap-y-2 border-b border-gray-200 px-4 pt-4 pb-8 last:border-b-0 hover:bg-gray-50">
+            <h2 class="mb -4 font-sans text-xl tracking-tighter">
+              <a href={`/blog/${post.id}`}>
+                <span class="absolute inset-0 z-10" />
                 {post.data.title}
-              </h2>
-            </a>
-            <p class="mb-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
-              <time datetime={post.data.pubDate.toISOString()}>
-                {datumFormatter.format(post.data.pubDate)}
-              </time>
-              {post.data.tags && (
-                <span class="flex flex-wrap gap-1.5">
-                  {post.data.tags.map((tag) => (
-                    <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs">
-                      {tag}
-                    </span>
-                  ))}
-                </span>
-              )}
-            </p>
+              </a>
+            </h2>
+
+            {post.data.tags && (
+              <ul class="flex flex-wrap gap-1.5 text-gray-500">
+                {post.data.tags.map((tag) => (
+                  <li class="rounded-xs bg-gray-100 px-2 py-0.5 font-mono text-xs">
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <p class="leading-relaxed text-gray-700">{post.data.description}</p>
-          </li>
+            <time
+              class="order-first text-sm font-light"
+              datetime={post.data.pubDate.toISOString()}
+            >
+              {datumFormatter.format(post.data.pubDate)}
+            </time>
+          </article>
         ))
       }
-    </ul>
+    </section>
   </main>
 </Layout>
