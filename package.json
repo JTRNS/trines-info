@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && chgrp -R www-data /srv/trines-info && chmod -R g+rwX /srv/trines-info && find /srv/trines-info -type d -exec chmod g+s {} +",
     "preview": "astro preview",
     "astro": "astro"
   },
