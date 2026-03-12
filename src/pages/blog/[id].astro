@@ -18,7 +18,10 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
 
 <Layout title={post.data.title}>
   <main>
-    <a class="terug" href="/blog">← Terug naar overzicht</a>
+    <a
+      class="inline-block text-sm text-gray-400 hover:text-gray-600"
+      href={`/#${post.id}`}>← Terug naar overzicht</a
+    >
     <article>
       <header>
         <h1 class="font-pixel">{post.data.title}</h1>
@@ -54,18 +57,6 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
     margin: 0 auto;
     padding: 2rem 1rem;
     font-family: system-ui, sans-serif;
-  }
-
-  .terug {
-    display: inline-block;
-    margin-bottom: 2rem;
-    color: #6b7280;
-    text-decoration: none;
-    font-size: 0.875rem;
-  }
-
-  .terug:hover {
-    color: #111827;
   }
 
   h1 {

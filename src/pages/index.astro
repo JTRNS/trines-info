@@ -55,7 +55,10 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
       {
         blogroll.map((post) => (
           <article class="relative isolate flex flex-col gap-y-2 border-b border-gray-200 px-4 pt-4 pb-8 last:border-b-0 hover:bg-gray-50">
-            <h2 class="mb -4 font-sans text-xl tracking-tighter">
+            <h2
+              id={`${post.id}`}
+              class="mb -4 font-sans text-xl tracking-tighter"
+            >
               <a href={`/blog/${post.id}`}>
                 <span class="absolute inset-0 z-10" />
                 {post.data.title}
