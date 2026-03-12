@@ -1,0 +1,109 @@
+---
+---
+
+<header class="flex items-center justify-between px-6 h-16 border-b border-gray-100 bg-white sticky top-0 z-10">
+  <a href="/" class="font-sans font-bold text-xl tracking-tight text-gray-900">JT</a>
+
+  <nav class="hidden md:flex items-center gap-8 text-sm text-gray-600">
+    <a href="/projecten" class="hover:text-gray-900 transition-colors">Projecten</a>
+    <a href="/contact" class="hover:text-gray-900 transition-colors">Contact</a>
+  </nav>
+
+  <button
+    popovertarget="nav-drawer"
+    class="hamburger-btn flex md:hidden items-center justify-center w-10 h-10 -mr-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+    aria-label="Menu openen"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="4" y1="6" x2="20" y2="6"/>
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <line x1="4" y1="18" x2="20" y2="18"/>
+    </svg>
+  </button>
+</header>
+
+<div id="nav-drawer" popover="auto" aria-label="Navigatie">
+  <div class="flex justify-end p-4 pb-2">
+    <button
+      popovertarget="nav-drawer"
+      popovertargetaction="hide"
+      class="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+      aria-label="Menu sluiten"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-1 px-4">
+    <a href="/projecten" class="px-4 py-3 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">Projecten</a>
+    <a href="/contact" class="px-4 py-3 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">Contact</a>
+  </nav>
+</div>
+
+<style>
+  .hamburger-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  #nav-drawer {
+    /* Override popover UA defaults */
+    position: fixed;
+    inset: 0 0 0 auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: min(320px, 85vw);
+    height: 100dvh;
+    background: white;
+    box-shadow: -4px 0 32px rgb(0 0 0 / 0.1);
+
+    /* Closed (base) state — where the exit transition ends */
+    transform: translateX(100%);
+    opacity: 0;
+
+    transition-property: transform, opacity, overlay, display;
+    transition-duration: 0.3s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-behavior: allow-discrete;
+  }
+
+  #nav-drawer:popover-open {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  /* Where the enter transition starts */
+  @starting-style {
+    #nav-drawer:popover-open {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  #nav-drawer::backdrop {
+    background: rgb(0 0 0 / 0%);
+    backdrop-filter: blur(0px);
+
+    transition-property: display, overlay, background-color, backdrop-filter;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-behavior: allow-discrete;
+  }
+
+  #nav-drawer:popover-open::backdrop {
+    background: rgb(0 0 0 / 25%);
+    backdrop-filter: blur(2px);
+  }
+
+  @starting-style {
+    #nav-drawer:popover-open::backdrop {
+      background: rgb(0 0 0 / 0%);
+      backdrop-filter: blur(0px);
+    }
+  }
+</style>

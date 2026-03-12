@@ -1,0 +1,11 @@
+@import "./fonts.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-pixel: "Geist Pixel", monospace;
+
+  --font-sans--font-feature-settings: "liga" 1, "calt" 1, "ss02" 1;
+  --font-mono--font-feature-settings: "liga" 0, "calt" 0, "zero" 1, "tnum" 1;
+}
