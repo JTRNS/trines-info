@@ -13,6 +13,7 @@ Sinds maart 2024 is **Interaction to Next Paint (INP)** de officiële vervanging
 INP meet de **totale latentie** van een interactie: van het moment dat een gebruiker klikt, typt of een touchevent triggert, tot het moment dat de browser de bijbehorende visuele update heeft gerenderd. Anders dan FID meet INP niet alleen de eerste interactie, maar het **slechtste percentiel** van alle interacties gedurende een sessie.
 
 Drempelwaarden:
+
 - **Goed**: ≤ 200 ms
 - **Verbetering nodig**: 200–500 ms
 - **Slecht**: > 500 ms
@@ -42,14 +43,14 @@ Het afwisselend lezen en schrijven van DOM-properties dwingt de browser tot herh
 
 ```javascript
 // Slecht
-elements.forEach(el => {
+elements.forEach((el) => {
   const hoogte = el.offsetHeight; // leest layout
-  el.style.height = hoogte + 10 + 'px'; // schrijft layout → forceer reflow
+  el.style.height = hoogte + 10 + "px"; // schrijft layout → forceer reflow
 });
 
 // Beter: eerst lezen, dan schrijven
-const hoogtes = elements.map(el => el.offsetHeight);
-elements.forEach((el, i) => el.style.height = hoogtes[i] + 10 + 'px');
+const hoogtes = elements.map((el) => el.offsetHeight);
+elements.forEach((el, i) => (el.style.height = hoogtes[i] + 10 + "px"));
 ```
 
 ## Meten in de praktijk
@@ -57,7 +58,7 @@ elements.forEach((el, i) => el.style.height = hoogtes[i] + 10 + 'px');
 Gebruik de [Web Vitals JavaScript-bibliotheek](https://github.com/GoogleChrome/web-vitals) voor real-user monitoring:
 
 ```javascript
-import { onINP } from 'web-vitals';
+import { onINP } from "web-vitals";
 
 onINP(({ value, rating, attribution }) => {
   console.log(`INP: ${value}ms (${rating})`);

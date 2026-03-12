@@ -1,9 +1,9 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const datumFormatter = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
+const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
 ---
 
 <Layout title={post.data.title}>
@@ -29,15 +29,17 @@ const datumFormatter = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
             {datumFormatter.format(post.data.pubDate)}
           </time>
         </p>
-        {post.data.tags && (
-          <p class="flex flex-wrap gap-1.5 mb-8 mt-0">
-            {post.data.tags.map((tag) => (
-              <span class="font-mono text-xs font-normal tracking-wide bg-gray-100 text-gray-700 rounded px-2 py-0.5">
-                {tag}
-              </span>
-            ))}
-          </p>
-        )}
+        {
+          post.data.tags && (
+            <p class="mt-0 mb-8 flex flex-wrap gap-1.5">
+              {post.data.tags.map((tag) => (
+                <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs font-normal tracking-wide text-gray-700">
+                  {tag}
+                </span>
+              ))}
+            </p>
+          )
+        }
       </header>
       <div class="content">
         <Content />

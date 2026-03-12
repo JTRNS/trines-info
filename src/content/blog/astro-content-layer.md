@@ -14,11 +14,11 @@ Astro 5.0 introduceerde een fundamentele herinrichting van het content-systeem: 
 De configuratie verhuist van `src/content/config.ts` naar `src/content.config.ts` (direct in `src/`). De kern is de `loader`-optie:
 
 ```typescript
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     pubDate: z.coerce.date(),
@@ -36,13 +36,13 @@ De `glob`-loader is de ingebouwde vervanger voor het oude bestandsgebaseerde sys
 Stel je haalt berichten op uit een headless CMS:
 
 ```typescript
-import type { Loader } from 'astro/loaders';
+import type { Loader } from "astro/loaders";
 
 const cmsLoader: Loader = {
-  name: 'cms-loader',
+  name: "cms-loader",
   async load({ store, logger }) {
-    logger.info('Berichten ophalen uit CMS...');
-    const res = await fetch('https://mijn-cms.nl/api/posts');
+    logger.info("Berichten ophalen uit CMS...");
+    const res = await fetch("https://mijn-cms.nl/api/posts");
     const posts = await res.json();
 
     store.clear();
@@ -61,23 +61,23 @@ De query-API is nagenoeg hetzelfde als voorheen:
 
 ```astro
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 const gesorteerd = posts.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 ```
 
 ## Voordelen ten opzichte van de oude aanpak
 
-| Aspect | Oud systeem | Content Layer |
-|---|---|---|
-| Databronnen | Alleen lokale bestanden | Bestanden, API's, databases |
-| Configuratielocatie | `src/content/config.ts` | `src/content.config.ts` |
-| Loaders | Ingebouwd, niet uitbreidbaar | Volledig pluggable |
-| Incrementele updates | Niet ondersteund | Via `store.set()` mogelijk |
+| Aspect               | Oud systeem                  | Content Layer               |
+| -------------------- | ---------------------------- | --------------------------- |
+| Databronnen          | Alleen lokale bestanden      | Bestanden, API's, databases |
+| Configuratielocatie  | `src/content/config.ts`      | `src/content.config.ts`     |
+| Loaders              | Ingebouwd, niet uitbreidbaar | Volledig pluggable          |
+| Incrementele updates | Niet ondersteund             | Via `store.set()` mogelijk  |
 
 ## Conclusie
 

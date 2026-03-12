@@ -1,65 +1,87 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
 
-const allPosts = await getCollection('blog');
+const allPosts = await getCollection("blog");
 const gesorteerd = allPosts.sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
 const uitgelicht = gesorteerd.find((post) => post.data.featured) ?? null;
 const blogroll = gesorteerd.filter((post) => post !== uitgelicht);
 
-const datumFormatter = new Intl.DateTimeFormat('nl-NL', { dateStyle: 'long' });
+const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
 ---
 
 <Layout>
-  <main class="max-w-3xl mx-auto px-4 py-8">
-    {uitgelicht && (
-      <section class="border border-gray-200 rounded-lg p-6 mb-12">
-        <p class="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3">Uitgelicht</p>
-        <a href={`/blog/${uitgelicht.id}`} class="group text-inherit no-underline">
-          <h2 class="text-xl mb-1 group-hover:underline">{uitgelicht.data.title}</h2>
-        </a>
-        <p class="text-sm text-gray-500 mb-2 flex items-center gap-3 flex-wrap">
-          <time datetime={uitgelicht.data.pubDate.toISOString()}>
-            {datumFormatter.format(uitgelicht.data.pubDate)}
-          </time>
-          {uitgelicht.data.tags && (
-            <span class="flex gap-1.5 flex-wrap">
-              {uitgelicht.data.tags.map((tag) => (
-                <span class="bg-gray-100 rounded px-2 py-0.5 text-xs">{tag}</span>
-              ))}
-            </span>
-          )}
-        </p>
-        <p class="text-gray-700 leading-relaxed">{uitgelicht.data.description}</p>
-      </section>
-    )}
-
-    <h1 class="text-3xl mb-8">Blog</h1>
-
-    <ul class="list-none p-0 flex flex-col gap-8">
-      {blogroll.map((post) => (
-        <li class="border-b border-gray-200 pb-8 last:border-b-0">
-          <a href={`/blog/${post.id}`} class="group text-inherit no-underline">
-            <h2 class="text-xl mb-1 group-hover:underline">{post.data.title}</h2>
+  <main class="mx-auto max-w-3xl px-4 py-8">
+    {
+      uitgelicht && (
+        <section class="mb-12 rounded-lg border border-gray-200 p-6">
+          <p class="mb-3 text-xs font-semibold tracking-widest text-gray-500 uppercase">
+            Uitgelicht
+          </p>
+          <a
+            href={`/blog/${uitgelicht.id}`}
+            class="group text-inherit no-underline"
+          >
+            <h2 class="mb-1 text-xl group-hover:underline">
+              {uitgelicht.data.title}
+            </h2>
           </a>
-          <p class="text-sm text-gray-500 mb-2 flex items-center gap-3 flex-wrap">
-            <time datetime={post.data.pubDate.toISOString()}>
-              {datumFormatter.format(post.data.pubDate)}
+          <p class="mb-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
+            <time datetime={uitgelicht.data.pubDate.toISOString()}>
+              {datumFormatter.format(uitgelicht.data.pubDate)}
             </time>
-            {post.data.tags && (
-              <span class="flex gap-1.5 flex-wrap">
-                {post.data.tags.map((tag) => (
-                  <span class="bg-gray-100 rounded px-2 py-0.5 text-xs">{tag}</span>
+            {uitgelicht.data.tags && (
+              <span class="flex flex-wrap gap-1.5">
+                {uitgelicht.data.tags.map((tag) => (
+                  <span class="rounded bg-gray-100 px-2 py-0.5 text-xs">
+                    {tag}
+                  </span>
                 ))}
               </span>
             )}
           </p>
-          <p class="text-gray-700 leading-relaxed">{post.data.description}</p>
-        </li>
-      ))}
+          <p class="leading-relaxed text-gray-700">
+            {uitgelicht.data.description}
+          </p>
+        </section>
+      )
+    }
+
+    <h1 class="mb-8 text-3xl">Blog</h1>
+
+    <ul class="flex list-none flex-col gap-8 p-0">
+      {
+        blogroll.map((post) => (
+          <li class="border-b border-gray-200 pb-8 last:border-b-0">
+            <a
+              href={`/blog/${post.id}`}
+              class="group text-inherit no-underline"
+            >
+              <h2 class="mb-1 text-xl group-hover:underline">
+                {post.data.title}
+              </h2>
+            </a>
+            <p class="mb-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {datumFormatter.format(post.data.pubDate)}
+              </time>
+              {post.data.tags && (
+                <span class="flex flex-wrap gap-1.5">
+                  {post.data.tags.map((tag) => (
+                    <span class="rounded bg-gray-100 px-2 py-0.5 text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </span>
+              )}
+            </p>
+            <p class="leading-relaxed text-gray-700">{post.data.description}</p>
+          </li>
+        ))
+      }
     </ul>
   </main>
 </Layout>
