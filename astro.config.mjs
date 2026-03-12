@@ -7,6 +7,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  outDir: '/srv/trines-info',
+
   integrations: [svelte()],
 
   vite: {
