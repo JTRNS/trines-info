@@ -36,7 +36,7 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
             {uitgelicht.data.tags && (
               <span class="flex flex-wrap gap-1.5">
                 {uitgelicht.data.tags.map((tag) => (
-                  <span class="rounded bg-gray-100 px-2 py-0.5 text-xs">
+                  <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs">
                     {tag}
                   </span>
                 ))}
@@ -71,7 +71,7 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
               {post.data.tags && (
                 <span class="flex flex-wrap gap-1.5">
                   {post.data.tags.map((tag) => (
-                    <span class="rounded bg-gray-100 px-2 py-0.5 text-xs">
+                    <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs">
                       {tag}
                     </span>
                   ))}
