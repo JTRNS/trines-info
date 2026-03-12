@@ -1,14 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <style>
-    svg {
-      --fill-color: orange;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      svg {
-        --fill-color: black;
-      }
-    }
-  </style>
-  <path d="M0 4v40a4 4 45 0 0 4 4h40a4 4 135 0 0 4-4V4a4 4 45 0 0-4-4H4a4 4 135 0 0-4 4m17.3 9.8h4.4v13.3c0 4.9-3 8-7.6 8-4.8 0-7.5-3.3-7.6-7.9L11 27q.1 4.4 3.1 4.3 3.1 0 3.2-4.2zm6.5 0h17v3.8h-6.3v17H30v-17h-6.2z" fill="var(--fill-color)"/>
+  <path d="M0 4v40a4 4 45 0 0 4 4h40a4 4 135 0 0 4-4V4a4 4 45 0 0-4-4H4a4 4 135 0 0-4 4m17.3 9.8h4.4v13.3c0 4.9-3 8-7.6 8-4.8 0-7.5-3.3-7.6-7.9L11 27q.1 4.4 3.1 4.3 3.1 0 3.2-4.2zm6.5 0h17v3.8h-6.3v17H30v-17h-6.2z" />
+<style>
+        path { fill: orange; }
+        @media (prefers-color-scheme: dark) {
+            path { fill: black; }
+        }
+    </style>
 </svg>
