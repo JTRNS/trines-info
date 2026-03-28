@@ -1,0 +1,5 @@
+{
+  "url": "https://tailwindcss.com/blog/tailwindcss-v4",
+  "note": "Tailwind v4 herschrijft de engine in Rust en schakelt over op CSS-variabelen en een Vite-plugin. Geen config-bestand meer nodig.",
+  "pubDate": "2026-01-10"
+}

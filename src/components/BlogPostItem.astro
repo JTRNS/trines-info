@@ -1,0 +1,82 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+
+const dateFmt = new Intl.DateTimeFormat("nl-NL", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<article
+  class="relative isolate grid grid-cols-[2fr_1fr] grid-rows-[auto_1fr_auto] border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
+>
+  <header class="contents">
+    <div
+      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <span
+        class="size-1.25 shrink-0 rounded-full bg-blue-500 dark:bg-blue-400"
+        aria-hidden="true"></span>
+      <span
+        class="text-xxs font-mono tracking-widest text-olive-600 uppercase dark:text-olive-200"
+      >
+        words
+      </span>
+    </div>
+    <div
+      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <time
+        class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
+        datetime={post.data.pubDate.toISOString()}
+      >
+        {dateFmt.format(post.data.pubDate)}
+      </time>
+    </div>
+  </header>
+
+  <div class="col-span-full row-start-2 flex flex-col gap-2 p-3.5">
+    <h2
+      class="text-base leading-snug font-semibold tracking-tight text-olive-900 dark:text-olive-100"
+    >
+      <a href={`/blog/${post.id}`} class="text-inherit no-underline">
+        <span class="absolute inset-0 z-10" aria-hidden="true"></span>
+        {post.data.title}
+      </a>
+    </h2>
+    <p
+      class="line-clamp-2 text-sm leading-relaxed text-olive-700 dark:text-olive-300"
+    >
+      {post.data.description}
+    </p>
+  </div>
+
+  <footer
+    class="col-span-full row-start-3 flex items-center gap-2 border-t border-olive-200 px-3.5 py-1.5 dark:border-olive-700"
+  >
+    {
+      post.data.tags && (
+        <ul class="flex min-w-0 flex-1 flex-nowrap items-center gap-1.5 overflow-hidden">
+          {post.data.tags.map((tag) => (
+            <li class="shrink-0 rounded-xs bg-olive-100 px-2 py-0.5 font-mono text-xs text-olive-600 dark:bg-olive-700 dark:text-olive-300">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <a
+      href={`/blog/${post.id}`}
+      class="relative z-20 shrink-0 border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+    >
+      lezen →
+    </a>
+  </footer>
+</article>

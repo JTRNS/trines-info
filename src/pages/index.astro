@@ -1,22 +1,39 @@
 ---
 import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import BlogPostItem from "../components/BlogPostItem.astro";
+import LinkItem from "../components/LinkItem.astro";
+import SnippetItem from "../components/SnippetItem.astro";
 
 const allPosts = await getCollection("blog");
-const gesorteerd = allPosts.sort(
+const allLinks = await getCollection("links");
+const allSnippets = await getCollection("snippets");
+
+type FeedEntry =
+  | CollectionEntry<"blog">
+  | CollectionEntry<"links">
+  | CollectionEntry<"snippets">;
+
+const feed: FeedEntry[] = [...allPosts, ...allLinks, ...allSnippets].sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const uitgelicht = gesorteerd.find((post) => post.data.featured) ?? null;
-const blogroll = gesorteerd.filter((post) => post !== uitgelicht);
+const uitgelicht = feed.find((entry) => entry.data.featured) ?? null;
+const feedZonderUitgelicht = feed.filter((entry) => entry !== uitgelicht);
 
-const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
+const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 ---
 
 <Layout>
   <main class="mx-auto max-w-3xl px-4 py-8">
     {
-      uitgelicht && (
+      uitgelicht && uitgelicht.data.type === "blog" && (
         <section class="mb-12 rounded-lg border border-gray-200 p-6">
           <p class="mb-3 text-xs font-semibold tracking-widest text-gray-500 uppercase">
             Uitgelicht
@@ -50,41 +67,24 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
       )
     }
 
-    <section class="flex flex-col gap-8 p-0">
-      <h2 class="font-pixel text-2xl">Blog</h2>
-      {
-        blogroll.map((post) => (
-          <article class="relative isolate flex flex-col gap-y-2 border-b border-gray-200 px-4 pt-4 pb-8 last:border-b-0 hover:bg-gray-50">
-            <h2
-              id={`${post.id}`}
-              class="mb -4 font-sans text-xl tracking-tighter"
-            >
-              <a href={`/blog/${post.id}`}>
-                <span class="absolute inset-0 z-10" />
-                {post.data.title}
-              </a>
-            </h2>
-
-            {post.data.tags && (
-              <ul class="flex flex-wrap gap-1.5 text-gray-500">
-                {post.data.tags.map((tag) => (
-                  <li class="rounded-xs bg-gray-100 px-2 py-0.5 font-mono text-xs">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            <p class="leading-relaxed text-gray-700">{post.data.description}</p>
-            <time
-              class="order-first text-sm font-light"
-              datetime={post.data.pubDate.toISOString()}
-            >
-              {datumFormatter.format(post.data.pubDate)}
-            </time>
-          </article>
-        ))
-      }
+    <section>
+      <h2 class="mb-8 font-sans text-2xl">Feed</h2>
+      <div id="feed" class="flex flex-col gap-y-8 p-0">
+        {
+          feedZonderUitgelicht.map((entry) => {
+            switch (entry.collection) {
+              case "blog":
+                return <BlogPostItem post={entry} />;
+              case "links":
+                return <LinkItem link={entry} />;
+              case "snippets":
+                return <SnippetItem snippet={entry} />;
+              default:
+                break;
+            }
+          })
+        }
+      </div>
     </section>
   </main>
 </Layout>

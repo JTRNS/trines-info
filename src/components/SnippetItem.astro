@@ -1,0 +1,90 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Code } from "astro:components";
+
+interface Props {
+  snippet: CollectionEntry<"snippets">;
+}
+
+const { snippet } = Astro.props;
+
+const dateFmt = new Intl.DateTimeFormat("nl-NL", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
+const code = snippet.body?.trim() ?? "";
+---
+
+<article
+  class="relative isolate grid grid-cols-[2fr_1fr] grid-rows-[auto_1fr_auto] border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
+>
+  <header class="contents">
+    <div
+      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <span
+        class="size-1.25 shrink-0 rounded-full bg-violet-500 dark:bg-sky-400"
+        aria-hidden="true"></span>
+      <span
+        class="text-xxs font-mono tracking-widest text-olive-600 uppercase dark:text-olive-200"
+      >
+        snippet
+      </span>
+    </div>
+    <div
+      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <time
+        class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
+        datetime={snippet.data.pubDate.toISOString()}
+      >
+        {dateFmt.format(snippet.data.pubDate)}
+      </time>
+    </div>
+  </header>
+
+  <div class="col-span-full row-start-2 flex flex-col gap-3 p-3.5">
+    {
+      snippet.data.description && (
+        <p class="m-0 text-sm leading-relaxed text-olive-900 dark:text-olive-100">
+          {snippet.data.description}
+        </p>
+      )
+    }
+    <Code
+      code={code}
+      lang={snippet.data.lang}
+      themes={{ light: "github-light", dark: "github-dark" }}
+      class="scrollbar-thin p-4!"
+    />
+  </div>
+
+  <footer
+    class="col-span-full row-start-3 flex items-center gap-2 border-t border-olive-200 px-3.5 py-1.5 dark:border-olive-700"
+  >
+    <span class="flex-1 font-mono text-xs text-olive-400 dark:text-olive-500">
+      {snippet.data.lang}
+    </span>
+    <button
+      class="copy-btn relative z-20 shrink-0 cursor-pointer border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+      data-code={code}
+      aria-label="Kopieer code"
+    >
+      kopieer
+    </button>
+  </footer>
+</article>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(btn.dataset.code ?? "");
+      btn.textContent = "gekopieerd!";
+      setTimeout(() => {
+        btn.textContent = "kopieer";
+      }, 2000);
+    });
+  });
+</script>

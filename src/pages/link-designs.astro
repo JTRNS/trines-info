@@ -1,0 +1,217 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/global.css";
+
+// ── SPLIT-SCREEN REVIEW: Tailwind arbitrary values vs. idiomatic Tailwind ──
+
+const allLinks = await getCollection("links");
+const links = allLinks.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const dateFmt = new Intl.DateTimeFormat("nl-NL", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>LinkItem Design Review — 5b</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+        background: #f0f0f0;
+        min-height: 100svh;
+      }
+      .review-header {
+        background: #000;
+        color: #fff;
+        padding: 0.75rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        border-bottom: 1px solid #222;
+      }
+      .review-header h1 {
+        font-family: "Geist Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #ff5a1f;
+        margin: 0;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .review-header p {
+        font-family: "Geist Mono", monospace;
+        font-size: 0.62rem;
+        color: #666;
+        margin: 0;
+        letter-spacing: 0.04em;
+      }
+
+      /* Split-screen layout */
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: calc(100svh - 44px);
+      }
+      .pane {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .pane + .pane {
+        border-left: 1px solid #d8d8d8;
+      }
+      .pane-label {
+        font-family: "Geist Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #999;
+        padding-bottom: 0.5rem;
+        border-bottom: 0.5px solid #ccc;
+      }
+      .pane-label strong {
+        color: #333;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="review-header">
+      <h1>Design 5b — Split Review</h1>
+      <p>
+        Left: Tailwind arbitrary values &nbsp;·&nbsp; Right: idiomatic Tailwind
+        &nbsp;·&nbsp; Verify visual parity before adopting as LinkItem
+      </p>
+    </div>
+
+    <div class="split">
+      <!-- ── LEFT PANE: Tailwind with arbitrary values ── -->
+      <div class="pane">
+        <p class="pane-label">
+          <strong>Tailwind</strong> &nbsp;/ arbitrary values
+        </p>
+        <div class="flex flex-col gap-2.5">
+          {
+            links.map((link) => (
+              <article
+                class="grid border-[0.5px] border-[#c0c0c0] bg-white"
+                style="grid-template-columns: 2fr 1fr; grid-template-rows: auto 1fr auto;"
+              >
+                {/* Status cell */}
+                <div class="col-start-1 row-start-1 flex items-center gap-[0.4rem] border-r-[0.5px] border-b-[0.5px] border-[#c0c0c0] bg-[#f9f9f9] px-3.5 py-[0.45rem]">
+                  <span class="size-1.25 shrink-0 rounded-full bg-[#ff5a1f]" />
+                  <span class="font-mono text-[0.58rem] tracking-widest text-[#555] uppercase">
+                    link
+                  </span>
+                </div>
+                {/* Date cell */}
+                <div class="col-start-2 row-start-1 flex items-center justify-end border-b-[0.5px] border-[#c0c0c0] bg-[#f9f9f9] px-3.5 py-[0.45rem]">
+                  <time
+                    class="font-mono text-[0.6rem] tracking-[0.05em] text-[#888]"
+                    datetime={link.data.pubDate.toISOString()}
+                  >
+                    {dateFmt.format(link.data.pubDate)}
+                  </time>
+                </div>
+                {/* Note cell */}
+                <div class="col-span-full row-start-2 p-3.5">
+                  {link.data.note && (
+                    <p class="m-0 text-[0.9rem] leading-[1.6] text-[#111]">
+                      {link.data.note}
+                    </p>
+                  )}
+                </div>
+                {/* URL + visit cell */}
+                <div class="col-span-full row-start-3 flex items-center gap-2 border-t-[0.5px] border-[#c0c0c0] px-3.5 py-[0.4rem]">
+                  <span class="min-w-0 flex-1 overflow-hidden font-mono text-[0.62rem] text-ellipsis whitespace-nowrap text-[#888]">
+                    {link.data.url}
+                  </span>
+                  <a
+                    href={link.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="shrink-0 bg-black px-3 py-[0.3rem] font-mono text-[0.6rem] tracking-[0.08em] text-white uppercase no-underline transition-colors duration-120 hover:bg-[#ff5a1f]"
+                  >
+                    visit ↗
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- ── RIGHT PANE: Idiomatic Tailwind ── -->
+      <div class="pane">
+        <p class="pane-label">
+          <strong>Tailwind</strong> &nbsp;/ idiomatic tokens
+        </p>
+        <div class="flex flex-col gap-2.5">
+          {
+            links.map((link) => (
+              <article
+                class="grid border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
+                style="grid-template-columns: 2fr 1fr; grid-template-rows: auto 1fr auto;"
+              >
+                {/* Status cell */}
+                <div class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800">
+                  <span class="size-1.25 shrink-0 rounded-full bg-orange-500 dark:bg-emerald-400" />
+                  <span class="text-xxs font-mono tracking-widest text-olive-600 uppercase dark:text-olive-200">
+                    link
+                  </span>
+                </div>
+                {/* Date cell */}
+                <div class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800">
+                  <time
+                    class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
+                    datetime={link.data.pubDate.toISOString()}
+                  >
+                    {dateFmt.format(link.data.pubDate)}
+                  </time>
+                </div>
+                {/* Note cell */}
+                <div class="col-span-full row-start-2 p-3.5">
+                  {link.data.note && (
+                    <p class="m-0 text-sm leading-relaxed text-olive-900 dark:text-olive-100">
+                      {link.data.note}
+                    </p>
+                  )}
+                </div>
+                {/* URL + visit cell */}
+                <div class="col-span-full row-start-3 flex items-center gap-2 border-t border-olive-200 px-3.5 py-1.5 dark:border-olive-700">
+                  <span class="min-w-0 flex-1 overflow-hidden font-mono text-xs text-ellipsis whitespace-nowrap text-olive-400 dark:text-olive-500">
+                    {link.data.url}
+                  </span>
+                  <a
+                    href={link.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="shrink-0 bg-black px-3 py-1 font-mono text-xs tracking-wider text-white uppercase no-underline transition-colors duration-100 hover:bg-orange-500 dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+                  >
+                    visit ↗
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

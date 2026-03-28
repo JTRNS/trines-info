@@ -1,0 +1,79 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  link: CollectionEntry<"links">;
+}
+
+const { link } = Astro.props;
+
+const dateFmt = new Intl.DateTimeFormat("nl-NL", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<article
+  class="relative isolate grid grid-cols-[2fr_1fr] grid-rows-[auto_1fr_auto] border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
+>
+  <header class="contents">
+    {/* Status cell */}
+    <div
+      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <span
+        class="size-1.25 shrink-0 rounded-full bg-orange-500 dark:bg-emerald-400"
+        aria-hidden="true"></span>
+      <span
+        class="text-xxs font-mono tracking-widest text-olive-600 uppercase dark:text-olive-200"
+      >
+        link
+      </span>
+    </div>
+    {/* Date cell */}
+    <div
+      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    >
+      <time
+        class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
+        datetime={link.data.pubDate.toISOString()}
+      >
+        {dateFmt.format(link.data.pubDate)}
+      </time>
+    </div>
+  </header>
+  {/* Note */}
+  <div class="col-span-full row-start-2 p-3.5">
+    {
+      link.data.note && (
+        <p class="m-0 text-sm leading-relaxed text-olive-900 dark:text-olive-100">
+          {link.data.note}
+        </p>
+      )
+    }
+  </div>
+  <footer
+    class="col-span-full row-start-3 flex items-center gap-2 border-t border-olive-200 px-3.5 py-1.5 dark:border-olive-700"
+  >
+    <a
+      href={link.data.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${link.data.url}`}
+      class="min-w-0 flex-1 overflow-hidden font-mono text-xs text-ellipsis whitespace-nowrap text-olive-400 no-underline dark:text-olive-500"
+    >
+      <span class="absolute inset-0 z-10" aria-hidden="true"></span>
+      {link.data.url}
+    </a>
+    <a
+      href={link.data.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${link.data.url}`}
+      class="relative z-20 shrink-0 border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+    >
+      visit ↗
+    </a>
+  </footer>
+</article>
