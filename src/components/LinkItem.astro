@@ -20,7 +20,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
   <header class="contents">
     {/* Status cell */}
     <div
-      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+    class="col-start-1 row-start-1 flex items-center gap-1.5 border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-950"
     >
       <span
         class="size-1.25 shrink-0 rounded-full bg-orange-500 dark:bg-emerald-400"
@@ -33,7 +33,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
     </div>
     {/* Date cell */}
     <div
-      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-950"
     >
       <time
         class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
@@ -47,7 +47,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
   <div class="col-span-full row-start-2 p-3.5">
     {
       link.data.note && (
-        <p class="m-0 text-sm leading-relaxed text-olive-900 dark:text-olive-100">
+        <p class="m-0 text-base leading-relaxed text-olive-900 dark:text-olive-100">
           {link.data.note}
         </p>
       )
@@ -71,7 +71,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Visit ${link.data.url}`}
-      class="relative z-20 shrink-0 border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+      class="relative z-20 shrink-0 font-mono text-xs tracking-wider text-olive-500 uppercase no-underline transition-colors duration-100 hover:text-olive-900 dark:text-olive-400 dark:hover:text-olive-100"
     >
       visit ↗
     </a>

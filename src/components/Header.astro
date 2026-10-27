@@ -1,24 +1,26 @@
 ---
-
+const { pathname } = Astro.url;
 ---
 
 <header
-  class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-100 bg-white px-6"
+  class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-100 bg-white px-6 dark:border-olive-800 dark:bg-olive-950"
 >
-  <a href="/" class="font-sans text-xl font-bold tracking-tight text-gray-900"
+  <a href="/" class="font-sans text-xl font-bold tracking-tight text-gray-900 dark:text-olive-100"
     >JT</a
   >
 
-  <nav class="hidden items-center gap-8 text-sm text-gray-600 md:flex">
-    <a href="/projecten" class="transition-colors hover:text-gray-900"
-      >Projecten</a
-    >
-    <a href="/contact" class="transition-colors hover:text-gray-900">Contact</a>
+  <nav class="hidden items-center gap-8 text-sm text-gray-600 md:flex dark:text-olive-400">
+    <a href="/" class={`transition-colors hover:text-gray-900 dark:hover:text-olive-100 ${pathname === '/' ? 'underline underline-offset-4' : ''}`}>Feed</a>
+    <a href="/over" class={`transition-colors hover:text-gray-900 dark:hover:text-olive-100 ${pathname === '/over' ? 'underline underline-offset-4' : ''}`}>Over</a>
+    <a
+      href="mailto:jeroen@trines.info"
+      class="border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+    >mail ↗</a>
   </nav>
 
   <button
     popovertarget="nav-drawer"
-    class="hamburger-btn -mr-2 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 md:hidden"
+    class="hamburger-btn -mr-2 flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 md:hidden dark:text-olive-300 dark:hover:bg-olive-800"
     aria-label="Menu openen"
   >
     <svg
@@ -45,7 +47,7 @@
     <button
       popovertarget="nav-drawer"
       popovertargetaction="hide"
-      class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100"
+      class="flex h-10 w-10 items-center justify-center rounded-lg text-gray-700 transition-colors hover:bg-gray-100 dark:text-olive-300 dark:hover:bg-olive-800"
       aria-label="Menu sluiten"
     >
       <svg
@@ -67,16 +69,22 @@
   </div>
   <nav class="flex flex-col gap-1 px-4">
     <a
-      href="/projecten"
-      class="rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-      >Projecten</a
+      href="/"
+      class={`rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-olive-300 dark:hover:bg-olive-800 dark:hover:text-olive-100 ${pathname === '/' ? 'underline underline-offset-4' : ''}`}
+      >Feed</a
     >
     <a
-      href="/contact"
-      class="rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900"
-      >Contact</a
+      href="/over"
+      class={`rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:text-olive-300 dark:hover:bg-olive-800 dark:hover:text-olive-100 ${pathname === '/over' ? 'underline underline-offset-4' : ''}`}
+      >Over</a
     >
   </nav>
+  <div class="fixed bottom-8 right-6">
+    <a
+      href="mailto:jeroen@trines.info"
+      class="border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+    >mail ↗</a>
+  </div>
 </div>
 
 <style>
@@ -119,6 +127,13 @@
     #nav-drawer:popover-open {
       transform: translateX(100%);
       opacity: 0;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #nav-drawer {
+      background: var(--color-olive-950);
+      box-shadow: -4px 0 32px rgb(0 0 0 / 0.4);
     }
   }
 

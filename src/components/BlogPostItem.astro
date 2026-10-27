@@ -15,11 +15,11 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
 ---
 
 <article
-  class="relative isolate grid grid-cols-[2fr_1fr] grid-rows-[auto_1fr_auto] border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
+  class="relative isolate grid grid-cols-[1fr_1fr] md:grid-cols-[3fr_1fr] grid-rows-[auto_1fr_auto] border border-olive-200 bg-white dark:border-olive-700 dark:bg-olive-900"
 >
   <header class="contents">
     <div
-      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+      class="col-start-1 row-start-1 flex items-center gap-1.5 border-r border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-950"
     >
       <span
         class="size-1.25 shrink-0 rounded-full bg-blue-500 dark:bg-blue-400"
@@ -31,7 +31,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
       </span>
     </div>
     <div
-      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-800"
+      class="col-start-2 row-start-1 flex items-center justify-end border-b border-olive-200 bg-olive-50 px-3.5 py-1.5 dark:border-olive-700 dark:bg-olive-950"
     >
       <time
         class="font-mono text-xs tracking-wider text-olive-400 dark:text-olive-500"
@@ -42,9 +42,9 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
     </div>
   </header>
 
-  <div class="col-span-full row-start-2 flex flex-col gap-2 p-3.5">
+  <div class="col-span-full row-start-2 flex flex-col gap-2 px-3.5 py-8">
     <h2
-      class="text-base leading-snug font-semibold tracking-tight text-olive-900 dark:text-olive-100"
+      class="text-xl leading-snug font-semibold tracking-tight text-olive-900 dark:text-olive-100 mb-0.5"
     >
       <a href={`/blog/${post.id}`} class="text-inherit no-underline">
         <span class="absolute inset-0 z-10" aria-hidden="true"></span>
@@ -52,7 +52,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
       </a>
     </h2>
     <p
-      class="line-clamp-2 text-sm leading-relaxed text-olive-700 dark:text-olive-300"
+      class="line-clamp-2 text-base leading-relaxed text-olive-700 dark:text-olive-300"
     >
       {post.data.description}
     </p>
@@ -74,7 +74,7 @@ const dateFmt = new Intl.DateTimeFormat("nl-NL", {
     }
     <a
       href={`/blog/${post.id}`}
-      class="relative z-20 shrink-0 border border-black bg-transparent px-3 py-1 font-mono text-xs tracking-wider text-black uppercase no-underline transition-colors duration-100 hover:bg-black hover:text-white dark:border-transparent dark:bg-amber-100 dark:text-black dark:hover:bg-emerald-500"
+      class="relative z-20 shrink-0 font-mono text-xs tracking-wider text-olive-500 uppercase no-underline transition-colors duration-100 hover:text-olive-900 dark:text-olive-400 dark:hover:text-olive-100"
     >
       lezen →
     </a>

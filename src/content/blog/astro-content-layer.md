@@ -4,7 +4,6 @@ description: "Astro 5.0 vervangt de oude content collections met een flexibele C
 pubDate: 2026-03-01
 author: "Trine"
 tags: ["astro", "content-layer", "javascript", "static-site"]
-featured: true
 ---
 
 Astro 5.0 introduceerde een fundamentele herinrichting van het content-systeem: de **Content Layer API**. Waar de oude `defineCollection` je beperkte tot bestanden in `src/content/`, kun je nu met loaders data ophalen vanuit elke gewenste bron.

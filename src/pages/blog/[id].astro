@@ -19,13 +19,13 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
 <Layout title={post.data.title}>
   <main class="mx-auto max-w-prose p-4">
     <a
-      class="inline-block text-sm text-gray-400 hover:text-gray-600"
+      class="inline-block text-sm text-gray-400 hover:text-gray-600 dark:text-olive-500 dark:hover:text-olive-300"
       href={`/#${post.id}`}>← Terug naar overzicht</a
     >
     <article class="mt-4">
       <header>
         <h1 class="font-pixel text-5xl leading-tight">{post.data.title}</h1>
-        <p>
+        <p class="dark:text-olive-400">
           <span>Door {post.data.author}</span>
           <span aria-hidden="true">·</span>
           <time datetime={post.data.pubDate.toISOString()}>
@@ -36,7 +36,7 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
           post.data.tags && (
             <p class="mt-0 mb-8 flex flex-wrap gap-1.5">
               {post.data.tags.map((tag) => (
-                <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs font-normal tracking-wide text-gray-700">
+                <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs font-normal tracking-wide text-gray-700 dark:bg-olive-800 dark:text-olive-300">
                   {tag}
                 </span>
               ))}
@@ -44,7 +44,7 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", { dateStyle: "long" });
           )
         }
       </header>
-      <div>
+      <div class="prose dark:prose-invert">
         <Content />
       </div>
     </article>

@@ -10,7 +10,6 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     author: z.string().default("Jeroen Trines"),
     tags: z.array(z.string()).default(["overig"]),
-    featured: z.boolean().default(false),
   }),
 });
 

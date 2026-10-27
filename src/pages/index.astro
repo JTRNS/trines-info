@@ -19,9 +19,6 @@ const feed: FeedEntry[] = [...allPosts, ...allLinks, ...allSnippets].sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const uitgelicht = feed.find((entry) => entry.data.featured) ?? null;
-const feedZonderUitgelicht = feed.filter((entry) => entry !== uitgelicht);
-
 const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
   weekday: "short",
   day: "numeric",
@@ -31,47 +28,12 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
 ---
 
 <Layout>
-  <main class="mx-auto max-w-3xl px-4 py-8">
-    {
-      uitgelicht && uitgelicht.data.type === "blog" && (
-        <section class="mb-12 rounded-lg border border-gray-200 p-6">
-          <p class="mb-3 text-xs font-semibold tracking-widest text-gray-500 uppercase">
-            Uitgelicht
-          </p>
-          <a
-            href={`/blog/${uitgelicht.id}`}
-            class="group text-inherit no-underline"
-          >
-            <h2 class="mb-1 text-xl group-hover:underline">
-              {uitgelicht.data.title}
-            </h2>
-          </a>
-          <p class="mb-2 flex flex-wrap items-center gap-3 text-sm text-gray-500">
-            <time datetime={uitgelicht.data.pubDate.toISOString()}>
-              {datumFormatter.format(uitgelicht.data.pubDate)}
-            </time>
-            {uitgelicht.data.tags && (
-              <span class="flex flex-wrap gap-1.5">
-                {uitgelicht.data.tags.map((tag) => (
-                  <span class="rounded bg-gray-100 px-2 py-0.5 font-mono text-xs">
-                    {tag}
-                  </span>
-                ))}
-              </span>
-            )}
-          </p>
-          <p class="leading-relaxed text-gray-700">
-            {uitgelicht.data.description}
-          </p>
-        </section>
-      )
-    }
-
+  <main class="mx-auto max-w-3xl px-4 md:px-16 py-8">
     <section>
-      <h2 class="mb-8 font-sans text-2xl">Feed</h2>
-      <div id="feed" class="flex flex-col gap-y-8 p-0">
+      <h2 class="mb-8 font-sans text-2xl dark:text-olive-100">Feed</h2>
+      <div id="feed" class="flex flex-col gap-y-20 p-0 mb-48">
         {
-          feedZonderUitgelicht.map((entry) => {
+          feed.map((entry) => {
             switch (entry.collection) {
               case "blog":
                 return <BlogPostItem post={entry} />;
