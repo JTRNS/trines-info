@@ -31,22 +31,28 @@ const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
   <main class="mx-auto max-w-3xl px-4 py-8 md:px-16">
     <section>
       <h2 class="mb-8 font-sans text-2xl dark:text-olive-100">Feed</h2>
-      <div id="feed" class="mb-48 flex flex-col gap-y-20 p-0">
-        {
-          feed.map((entry) => {
-            switch (entry.collection) {
-              case "blog":
-                return <BlogPostItem post={entry} />;
-              case "links":
-                return <LinkItem link={entry} />;
-              case "snippets":
-                return <SnippetItem snippet={entry} />;
-              default:
-                break;
-            }
-          })
-        }
-      </div>
+      {
+        feed.length === 0 ? (
+          <p class="mb-48 font-mono text-sm text-olive-500 dark:text-olive-400">
+            Hier wordt nog aan gewerkt
+          </p>
+        ) : (
+          <div id="feed" class="mb-48 flex flex-col gap-y-20 p-0">
+            {feed.map((entry) => {
+              switch (entry.collection) {
+                case "blog":
+                  return <BlogPostItem post={entry} />;
+                case "links":
+                  return <LinkItem link={entry} />;
+                case "snippets":
+                  return <SnippetItem snippet={entry} />;
+                default:
+                  break;
+              }
+            })}
+          </div>
+        )
+      }
     </section>
   </main>
 </Layout>
