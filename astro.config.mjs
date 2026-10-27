@@ -9,6 +9,10 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   outDir: "/srv/trines-info",
 
+  redirects: {
+    "/over": "/",
+  },
+
   integrations: [svelte()],
 
   vite: {

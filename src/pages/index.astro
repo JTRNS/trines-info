@@ -1,52 +1,51 @@
 ---
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import BlogPostItem from "../components/BlogPostItem.astro";
-import LinkItem from "../components/LinkItem.astro";
-import SnippetItem from "../components/SnippetItem.astro";
-
-const allPosts = await getCollection("blog");
-const allLinks = await getCollection("links");
-const allSnippets = await getCollection("snippets");
-
-type FeedEntry =
-  | CollectionEntry<"blog">
-  | CollectionEntry<"links">
-  | CollectionEntry<"snippets">;
-
-const feed: FeedEntry[] = [...allPosts, ...allLinks, ...allSnippets].sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
-
-const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
-  weekday: "short",
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
 ---
 
-<Layout>
-  <main class="mx-auto max-w-3xl px-4 md:px-16 py-8">
-    <section>
-      <h2 class="mb-8 font-sans text-2xl dark:text-olive-100">Feed</h2>
-      <div id="feed" class="flex flex-col gap-y-20 p-0 mb-48">
-        {
-          feed.map((entry) => {
-            switch (entry.collection) {
-              case "blog":
-                return <BlogPostItem post={entry} />;
-              case "links":
-                return <LinkItem link={entry} />;
-              case "snippets":
-                return <SnippetItem snippet={entry} />;
-              default:
-                break;
-            }
-          })
-        }
-      </div>
-    </section>
+<Layout title="Over — trines.info">
+  <main class="mx-auto max-w-3xl px-4 py-12">
+    <header class="mb-10">
+      <p
+        class="mb-3 font-mono text-xs tracking-widest text-olive-400 uppercase dark:text-olive-500"
+      >
+        over
+      </p>
+      <h1
+        class="font-sans text-3xl font-bold tracking-tight text-gray-900 dark:text-olive-100"
+      >
+        Jeroen Trines
+      </h1>
+      <p class="mt-2 font-mono text-sm text-olive-500 dark:text-olive-400">
+        's Werelds slaperigste softwareontwikkelaar
+      </p>
+    </header>
+
+    <div
+      class="flex flex-col gap-4 text-base leading-relaxed text-olive-800 dark:text-olive-200"
+    >
+      <p>
+        Hoi, mijn naam is Jeroen en ik ben liever lui dan moe. Want door mijn
+        narcolepsie ben ik helaas altijd moe. Daardoor blijft er vaak te weinig
+        tijd over om lui te zijn. Niet ideaal, maar wel een constante motivator
+        om altijd de slimste oplossing te vinden, die het minste tijd kost.
+      </p>
+      <p>
+        Als 's werelds slaperigste softwareontwikkelaar zoek ik die oplossingen
+        vaak achter mijn beeldscherm. Daar werk ik met plezier aan applicaties
+        die tijdrovende toetsenbordtirades vervangen door muisklik-en-klaar
+        momenten. Dat werk doe ik ook graag voor anderen die hun beeldschermwerk
+        méér moe zijn dan ik ben.
+      </p>
+      <p>
+        Voor vragen daarover <del>mag</del>
+        <ins class="not-italic">moet</ins> je mij altijd wakker maken, dus je kunt
+        het best{" "}
+        <a
+          href="mailto:jeroen@trines.info"
+          class="border-b border-olive-400 text-olive-900 no-underline transition-colors hover:border-olive-900 dark:border-olive-500 dark:text-olive-100 dark:hover:border-olive-100"
+          >een e-mail sturen</a
+        >.
+      </p>
+    </div>
   </main>
 </Layout>

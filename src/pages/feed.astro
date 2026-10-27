@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import BlogPostItem from "../components/BlogPostItem.astro";
+import LinkItem from "../components/LinkItem.astro";
+import SnippetItem from "../components/SnippetItem.astro";
+
+const allPosts = await getCollection("blog");
+const allLinks = await getCollection("links");
+const allSnippets = await getCollection("snippets");
+
+type FeedEntry =
+  | CollectionEntry<"blog">
+  | CollectionEntry<"links">
+  | CollectionEntry<"snippets">;
+
+const feed: FeedEntry[] = [...allPosts, ...allLinks, ...allSnippets].sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const datumFormatter = new Intl.DateTimeFormat("nl-NL", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<Layout>
+  <main class="mx-auto max-w-3xl px-4 py-8 md:px-16">
+    <section>
+      <h2 class="mb-8 font-sans text-2xl dark:text-olive-100">Feed</h2>
+      <div id="feed" class="mb-48 flex flex-col gap-y-20 p-0">
+        {
+          feed.map((entry) => {
+            switch (entry.collection) {
+              case "blog":
+                return <BlogPostItem post={entry} />;
+              case "links":
+                return <LinkItem link={entry} />;
+              case "snippets":
+                return <SnippetItem snippet={entry} />;
+              default:
+                break;
+            }
+          })
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
